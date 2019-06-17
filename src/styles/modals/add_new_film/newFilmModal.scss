@@ -1,0 +1,70 @@
+#behind-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+#modal-container {
+    $modal-width: 600px;
+
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: calc(100% / 2 - (#{$modal-width} / 2));
+    top: 100px;
+    width: $modal-width;
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 10px;
+
+    header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+
+        .change-mode-button {
+            cursor: pointer;
+            height: 100%;
+            width: 50%;
+            border: none;
+            background-color: transparent;
+            font-size: 18px;
+
+            &:disabled {
+                pointer-events: none;
+            }
+        }
+
+        #close-modal {
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 100%;
+            background-color: transparent;
+            border: none;
+            font-size: 30px;
+            color: #959595;
+            transform: translate(10px, -10px);
+
+            &:hover {
+                color: #dd5500;
+            }
+
+            &:disabled {
+                pointer-events: none;
+            }
+        }
+    }
+
+    #mode {
+        display: flex;
+        width: 100%;
+        height: 100%;
+    }
+}

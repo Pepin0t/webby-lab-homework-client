@@ -1,0 +1,76 @@
+#single-film-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    .inputs {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+
+            .hint {
+                position: relative;
+                cursor: pointer;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border: 2px solid #959595;
+                color: #959595;
+                border-radius: 50%;
+                height: 25px;
+                width: 25px;
+
+                &:hover {
+                    &::before {
+                        content: "Use comma as separator.\A Example\: Michael Douglas, Mikhail Boyarsky, ...";
+                        white-space: pre;
+                        position: absolute;
+                        left: 15px;
+                        bottom: 100%;
+                        padding: 15px;
+                        font-size: 14px;
+                        background-color: #fff;
+                        border: 1px solid #959595;
+                        border-radius: 10px;
+                    }
+                }
+            }
+
+            input {
+                padding: 15px;
+                width: calc(100% - 120px);
+                height: 40px;
+                border-radius: 10px;
+                border: 1px solid #959595;
+            }
+        }
+    }
+
+    .message {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+    }
+
+    footer {
+        display: flex;
+        justify-content: center;
+        flex-grow: 0;
+        margin-top: 30px;
+
+        button {
+            @extend .base-button;
+
+            &:disabled {
+                pointer-events: none;
+            }
+        }
+    }
+}

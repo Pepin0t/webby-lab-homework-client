@@ -1,0 +1,30 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.base-button {
+    cursor: pointer;
+    font-size: 14px;
+    width: 150px;
+    height: 40px;
+    border-radius: 10px;
+    border: none;
+
+    &:hover {
+        background-color: #aacc99;
+        color: #fff;
+    }
+}
+
+@import "./styles/container.scss";
+@import "./styles/userInterface.scss";
+@import "./styles/listOfFilms.scss";
+@import "./styles/film.scss";
+
+@import "./styles/modals/add_new_film/newFilmModal.scss";
+@import "./styles/modals/add_new_film/singleFilmInterface.scss";
+@import "./styles/modals/add_new_film/multipleFilmsInterface.scss";

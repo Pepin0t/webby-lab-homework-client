@@ -1,0 +1,99 @@
+// сделать базовую кнопку
+
+.film-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 15px;
+    height: 80px;
+    border: 1px solid #959595;
+    border-radius: 10px;
+    margin-bottom: 45px;
+
+    &.expanded {
+        padding: 30px 15px;
+        height: auto;
+    }
+
+    .info {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        width: calc(100% - 200px);
+
+        .preview {
+            font-size: 20px;
+        }
+
+        .film-id {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            top: -45px;
+            left: 0;
+            padding: 0 15px;
+            border: 1px solid #959595;
+            border-radius: 15px;
+            height: 30px;
+            background-color: #fff;
+            color: #959595;
+        }
+
+        .film-data {
+            display: flex;
+            align-items: center;
+            min-height: 30px;
+        }
+    }
+
+    .delete {
+        display: flex;
+        justify-content: flex-end;
+        width: 200px;
+
+        .question {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100px;
+        }
+
+        .confirm-button {
+            cursor: pointer;
+            position: relative;
+            width: 50px;
+            height: 50px;
+            border: none;
+            background-color: transparent;
+            font-size: 30px;
+
+            &:hover {
+                color: #aacc99;
+            }
+
+            &:disabled {
+                pointer-events: none;
+            }
+        }
+
+        .prepare-to-delete-button {
+            cursor: pointer;
+            height: 50px;
+            width: 50px;
+            font-size: 40px;
+            border: none;
+            background-color: transparent;
+
+            &:hover {
+                color: #dd5500;
+            }
+
+            &:disabled {
+                pointer-events: none;
+            }
+        }
+    }
+}
