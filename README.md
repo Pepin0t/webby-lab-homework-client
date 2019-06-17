@@ -13,6 +13,7 @@ Secondly. `nodejs` must be installed on your computer.
 And thirdly... just clone this application and run it following command:
 
 ```
+npm install
 npm run dev
 ```
 Next step. Open your browser, copy url address...
