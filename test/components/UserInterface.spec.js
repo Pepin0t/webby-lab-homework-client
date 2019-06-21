@@ -15,12 +15,12 @@ describe("UserInterface Component", () => {
     const wrapper = shallow(<UserInterface {...props} />);
 
     it("show modal window", () => {
-        wrapper.find("#show-modal").simulate("click");
+        wrapper.find("#show-modal-button").simulate("click");
         expect(props.show.calledOnce).to.equal(true);
     });
 
     it("sort list", () => {
-        wrapper.find("#sort-list").simulate("click");
+        wrapper.find("#sort-list-button").simulate("click");
         expect(props.sort.calledOnce).to.equal(true);
     });
 });
