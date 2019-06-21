@@ -9,13 +9,14 @@ export class SingleFilmInterface extends PureComponent {
     static propTypes = {
         addFilm: PropTypes.func,
         waiting: PropTypes.bool,
-        response: PropTypes.object
+        response: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
     };
 
     constructor(props) {
         super(props);
 
         this.debounce = {};
+        this.inputs = [];
 
         this.state = {
             title: "",
@@ -27,6 +28,22 @@ export class SingleFilmInterface extends PureComponent {
             showMessage: false,
             innerMessage: ""
         };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.response.ok === true && prevProps.response.ok === undefined) {
+            this.setState(
+                {
+                    title: "",
+                    release: "",
+                    format: "",
+                    stars: ""
+                },
+                () => {
+                    this.inputs.forEach(input => (input.value = ""));
+                }
+            );
+        }
     }
 
     inputChange = e => {
@@ -70,7 +87,9 @@ export class SingleFilmInterface extends PureComponent {
             return;
         }
 
-        if (Number.isNaN(+this.state.release)) {
+        const release = +this.state.release;
+
+        if (Number.isNaN(release)) {
             this.setState(() => ({
                 showMessage: true,
                 innerMessage: "Release year must to be a number"
@@ -79,9 +98,18 @@ export class SingleFilmInterface extends PureComponent {
             return;
         }
 
+        if (release < 1850 || release > 2020) {
+            this.setState(() => ({
+                showMessage: true,
+                innerMessage: "Release year must be between 1850 and 2020"
+            }));
+
+            return;
+        }
+
         const film = {
             title: this.state.title,
-            release: +this.state.release,
+            release,
             format: this.state.format,
             stars: this.state.stars.split(",")
         };
@@ -100,19 +128,19 @@ export class SingleFilmInterface extends PureComponent {
                 <div className="inputs" onChange={this.inputChange}>
                     <label htmlFor="title">
                         Title:
-                        <input type="text" name="title" id="title" autoFocus />
+                        <input ref={input => (this.inputs[0] = input)} type="text" name="title" id="title" autoFocus />
                     </label>
                     <label htmlFor="release">
                         Release year:
-                        <input type="text" name="release" id="release" />
+                        <input ref={input => (this.inputs[1] = input)} type="text" name="release" id="release" />
                     </label>
                     <label htmlFor="format">
                         Format:
-                        <input type="text" name="format" id="format" />
+                        <input ref={input => (this.inputs[2] = input)} type="text" name="format" id="format" />
                     </label>
                     <label htmlFor="stars">
                         Stars:<span className="hint">?</span>
-                        <input type="text" name="stars" id="stars" />
+                        <input ref={input => (this.inputs[3] = input)} type="text" name="stars" id="stars" />
                     </label>
                 </div>
 
