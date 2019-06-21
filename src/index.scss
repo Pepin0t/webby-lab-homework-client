@@ -6,6 +6,10 @@
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
+html {
+    margin-left: calc(100vw - 100%);
+}
+
 .base-button {
     cursor: pointer;
     font-size: 14px;
