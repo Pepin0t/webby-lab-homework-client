@@ -31,7 +31,6 @@ export class MultipleFilmsInterface extends PureComponent {
             this.setState(
                 {
                     fileName: "",
-                    showMessage: false,
                     innerMessage: "",
                     ready: false
                 },
