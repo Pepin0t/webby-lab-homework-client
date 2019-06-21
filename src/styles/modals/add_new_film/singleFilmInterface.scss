@@ -67,6 +67,7 @@
 
         button {
             @extend .base-button;
+            color: black;
 
             &:disabled {
                 pointer-events: none;
