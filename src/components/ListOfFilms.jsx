@@ -11,7 +11,7 @@ export class ListOfFilms extends PureComponent {
         getListOfFilms: PropTypes.func,
         list: PropTypes.array,
         loading: PropTypes.bool,
-        response: PropTypes.object
+        response: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
     };
 
     componentDidMount() {
