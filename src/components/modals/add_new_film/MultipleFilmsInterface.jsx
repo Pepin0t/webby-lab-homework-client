@@ -30,8 +30,8 @@ export class MultipleFilmsInterface extends PureComponent {
         if (this.props.response.ok === true && prevProps.response.ok === undefined) {
             this.setState(
                 {
-                    innerMessage: "",
                     fileName: "",
+                    innerMessage: "",
                     ready: false
                 },
                 () => {
