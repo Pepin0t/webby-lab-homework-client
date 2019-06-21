@@ -16,6 +16,7 @@ export const getListOfFilms = () => async dispatch => {
 
     try {
         const { data } = await get();
+
         dispatch({ type: GET_LIST_OF_FILMS, response: data });
     } catch (error) {
         dispatch({ type: GET_LIST_OF_FILMS, response: error.response.data });
@@ -57,8 +58,8 @@ export const deleteFilm = ID => {
     return { type: DELETE_FILM, ID };
 };
 
-export const searchInListOfFilms = query => {
-    return { type: SEARCH_IN_LIST_OF_FILMS, query };
+export const searchInListOfFilms = (query, category) => {
+    return { type: SEARCH_IN_LIST_OF_FILMS, query, category };
 };
 
 const getListOfFilmsloading = () => {
