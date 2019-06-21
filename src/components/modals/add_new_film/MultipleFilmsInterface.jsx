@@ -8,41 +8,42 @@ export class MultipleFilmsInterface extends PureComponent {
     static propTypes = {
         addFilm: PropTypes.func,
         waiting: PropTypes.bool,
-        response: PropTypes.object
+        response: PropTypes.oneOfType([PropTypes.object, PropTypes.string])
     };
 
     constructor(props) {
         super(props);
 
+        this.form = createRef();
         this.fileInput = createRef();
 
         this.state = {
             fileName: "",
             showMessage: false,
-            innerMessage: ""
+            innerMessage: "",
+
+            ready: false
         };
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.response.ok === true && prevProps.response.ok === undefined) {
+            this.setState(
+                {
+                    fileName: "",
+                    showMessage: false,
+                    innerMessage: "",
+                    ready: false
+                },
+                () => {
+                    this.form.current.reset();
+                }
+            );
+        }
     }
 
     onSubmit = () => {
         const file = this.fileInput.current.files[0];
-
-        if (file.type !== "text/plain") {
-            this.setState(() => ({
-                showMessage: true,
-                innerMessage: "Unsupported file's format"
-            }));
-
-            return;
-        }
-
-        if (file.size > 50000) {
-            this.setState(() => ({
-                showMessage: true,
-                innerMessage: "Maximum file's size exceeded"
-            }));
-
-            return;
-        }
 
         this.setState(
             {
@@ -55,26 +56,67 @@ export class MultipleFilmsInterface extends PureComponent {
     };
 
     inputChange = () => {
-        const file = this.fileInput.current.files[0];
+        if (!this.fileInput.current.files[0]) {
+            this.setState(() => ({
+                fileName: "",
+                showMessage: false,
+                innerMessage: "",
+                ready: false
+            }));
 
-        if (!file) return;
+            return;
+        }
+
+        const fileError = message => {
+            this.setState(
+                {
+                    fileName: "",
+                    showMessage: true,
+                    innerMessage: message,
+                    ready: false
+                },
+                () => {
+                    this.form.current.reset();
+                }
+            );
+        };
+
+        if (this.fileInput.current.files[0].type !== "text/plain") {
+            fileError("Unsupported file's format");
+
+            return;
+        }
+
+        if (this.fileInput.current.files[0].size > 50000) {
+            fileError("Maximum file's size exceeded");
+
+            return;
+        }
 
         this.setState(() => ({
-            fileName: file.name,
+            fileName: this.fileInput.current.files[0].name,
             showMessage: false,
-            innerMessage: ""
+            innerMessage: "",
+            ready: true
         }));
     };
 
     render() {
         return (
             <div id="multiple-films-container">
-                <div id="file-container">
+                <form ref={this.form} id="file-container">
                     <label htmlFor="file">
-                        <input type="file" name="" id="file" ref={this.fileInput} onChange={this.inputChange} />
+                        <input
+                            ref={this.fileInput}
+                            type="file"
+                            name=""
+                            id="file"
+                            accept=".txt"
+                            onChange={this.inputChange}
+                        />
                     </label>
                     <div> {this.state.fileName ? "File's name: " + this.state.fileName : "Choose your file"}</div>
-                </div>
+                </form>
 
                 <div id="file-rules">Supported formats: txt; Max-size: 50Kb</div>
 
@@ -105,7 +147,7 @@ export class MultipleFilmsInterface extends PureComponent {
                 <footer>
                     <button
                         className="submit-button"
-                        disabled={!this.state.fileName || this.props.waiting}
+                        disabled={!this.state.ready || this.props.waiting}
                         onClick={this.onSubmit}
                     >
                         {this.props.waiting ? "Wait..." : "Submit"}
