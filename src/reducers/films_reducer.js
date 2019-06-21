@@ -84,16 +84,13 @@ export default (state = initialState, action) => {
         }
 
         case SORT_LIST_OF_FILMS: {
+            const result = new Intl.Collator(["en-US", "uk", "ru"], {
+                caseFirst: "upper",
+                numeric: true
+            });
+
             const sortedList = state.list.slice().sort((a, b) => {
-                if (a.title > b.title) {
-                    return 1;
-                }
-
-                if (a.title < b.title) {
-                    return -1;
-                }
-
-                return 0;
+                return result.compare(a.title, b.title);
             });
 
             return { ...state, list: sortedList };
@@ -107,14 +104,21 @@ export default (state = initialState, action) => {
             }
 
             const searchResult = actualList.filter(film => {
-                const title = film.title.toLowerCase();
+                if (action.category === "movies") {
+                    const title = film.title.toLowerCase();
 
-                const stars = film.stars
-                    .slice()
-                    .join()
-                    .toLowerCase();
+                    return title.indexOf(query) !== -1;
+                }
 
-                return title.indexOf(query) !== -1 || stars.indexOf(query) !== -1;
+                if (action.category === "stars") {
+                    const stars = film.stars
+                        .slice()
+                        .join()
+                        .replace(/,/g, " ")
+                        .toLowerCase();
+
+                    return stars.indexOf(query) !== -1;
+                }
             });
 
             return { ...state, list: searchResult };
