@@ -9,16 +9,89 @@
     background-color: #fff;
     margin-bottom: 15px;
 
-    #text-input {
-        margin-left: 15px;
+    #search-wrapper {
+        position: relative;
         padding: 0 15px;
-        height: 40px;
-        width: 250px;
-        border-radius: 10px;
-        border: 1px solid #959595;
+        display: flex;
+        align-items: center;
+        height: 70px;
+        border-bottom: 2px solid #d8d8d8;
+
+        label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+
+            #text-input {
+                flex-grow: 0;
+                padding: 0 15px;
+                margin-left: 15px;
+                height: 40px;
+                width: 200px;
+                border: 1px solid #959595;
+                border-radius: 10px;
+
+                &.on-front {
+                    z-index: 2;
+                    border: transparent;
+                }
+            }
+        }
+
+        #change-search-category-button {
+            @extend .base-button;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-left: 15px;
+
+            &.on-front {
+                font-size: 20px;
+                z-index: 2;
+
+                &:hover {
+                    background-color: #dd5500;
+                }
+            }
+        }
+
+        #behind-categories-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1;
+        }
+
+        #search-categories {
+            position: absolute;
+            top: 85px;
+            right: 60px;
+            padding: 15px 15px 0 15px;
+            width: 200px;
+            border-radius: 10px;
+            background-color: #fff;
+            z-index: 2;
+
+            .category {
+                @extend .base-button;
+                width: 100%;
+                margin-bottom: 15px;
+
+                &:disabled {
+                    pointer-events: none;
+                    border: 2px solid #aacc99;
+                    color: #aacc99;
+                    background-color: #fff;
+                }
+            }
+        }
     }
 
-    button {
+    #show-modal-button,
+    #sort-list-button {
         @extend .base-button;
     }
 }
